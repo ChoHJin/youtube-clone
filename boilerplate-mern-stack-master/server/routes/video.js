@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const multer = require("multer");
+var ffmpeg = require('fluent-ffmpeg');
+
 // const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
-
-const multer = require("multer");
 
 //STORAGE MULTER CONFIG
 var storage = multer.diskStorage({
@@ -41,15 +42,16 @@ router.post("/uploadfiles", (req, res) => {
     
     // 썸네일 생성하고 비디오 러닝타임도 가져오기
 
-    let filePath = ""
-    let fileDuration = ""
+    let filePath = "";
+    let fileDuration = "";
 
     //비디오 정보 가져오기
-    ffmpeg.ffprobe(req.body.url, function (err, metadata) {
+    ffmpeg.ffprobe(req.body.url, function(err, metadata){
         console.dir(metadata);
         console.log(metadata.format.duration);
-        fileDuration = metadata.format.duration
-    });
+
+        fileDuration = metadata.format.duration;
+    })
 
     // 썸네일 생성
     ffmpeg(req.body.url)

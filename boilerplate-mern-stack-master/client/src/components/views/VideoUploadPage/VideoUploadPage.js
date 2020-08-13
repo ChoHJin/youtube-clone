@@ -24,11 +24,11 @@ function VideoUploadPage() {
 
     const [VideoTitle, setVideoTitle] = useState("")
     const [Description, setDescription] = useState("")
-    const [Private, setPrivate] = useState(0)
+    const [Privacy, setPrivacy] = useState(0)
     const [Category, setCategory] = useState("Firm & Animation")
     const [FilePath, setFilePath] = useState("")
     const [Duration, setDuration] = useState("")
-    const [TumbnailPath, setTumbnailPath] = useState("")
+    const [ThumbnailPath, setThumbnailPath] = useState("")
 
 
     const onTitleChange = (e) => {
@@ -40,7 +40,7 @@ function VideoUploadPage() {
     }
 
     const onPrivateChange = (e) => {
-        setPrivate(e.currentTarget.value);
+        setPrivacy(e.currentTarget.value);
     }
 
     const onCategoryChange = (e) => {
@@ -49,7 +49,7 @@ function VideoUploadPage() {
 
     const onDrop = (files) => {
 
-        let formData = new FormData;
+        let formData = new FormData();
         const config = { 
               header: {'content-type' : 'multipart/form-data'}
         }
@@ -65,10 +65,15 @@ function VideoUploadPage() {
                         fileName: response.data.fileName
                     }
 
+                    setFilePath(response.data.url)
+
                     Axios.post('/api/video/thumbnail', variable)
                     .then(response => {
                         if(response.data.success) {
-                            console.log()
+                            setDuration(response.data.fileDuration)
+                            setThumbnailPath(response.data.url)
+
+                            
                         }else {
                             alert('썸네일 생성에 실패 했습니다.')
                         }
@@ -82,31 +87,35 @@ function VideoUploadPage() {
 
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
-                <div style ={{ textAlign : 'center', marginBottom : '2rem' }}>
-                    <Title level = {2}>Upload Video</Title>
-                </div>            
+            <div style ={{ textAlign : 'center', marginBottom : '2rem' }}>
+                <Title level = {2}>Upload Video</Title>
+            </div>            
 
-                <Form onSubmit>
-                    <div style={{ display:'flex', justifyContent:'space-between'}}>
-                            {/*Drop Zone */}
-                            <Dropzone
-                            onDrop={onDrop}
-                            multiple={false}
-                            maxSize={1000000000}
-                            >
-                            {({ getRootProps, getInputProps}) =>(
-                                <div style = {{ width: '300px', height: '240px', border: '1px solid lightgray', display:'flex',
-                                alignItems:'center', justifyContent: 'center'}} {...getRootProps()}>
-                                <input {...getInputProps()} />
-                                <Icon type="plus" style={{ fontSize: '3rem'}}  />
-                                </div>
-                            )}
-                            </Dropzone>
-                            {/*Thumbnail */}
-                            <div>
-                                <img src art />
-                            </div>
-                    </div>
+            <Form onSubmit>
+                <div style={{ display:'flex', justifyContent:'space-between'}}>
+                    {/*Drop Zone */}
+                    <Dropzone
+                    onDrop={onDrop}
+                    multiple={false}
+                    maxSize={1000000000}
+                    >
+                    {({ getRootProps, getInputProps}) =>(
+                        <div style = {{ width: '300px', height: '240px', border: '1px solid lightgray', display:'flex',
+                        alignItems:'center', justifyContent: 'center'}} {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <Icon type="plus" style={{ fontSize: '3rem'}}  />
+                        </div>
+                    )}
+                    </Dropzone>
+
+                    {ThumbnailPath && 
+                        <div>
+                        <img src={`http://localhost:5000/${ThumbnailPath}`} alt="thumbnail" />
+                        </div>
+                    }
+                            
+                </div>
+
             <br />
             <br />
             <label>Title</label>
