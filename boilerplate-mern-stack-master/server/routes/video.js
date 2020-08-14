@@ -61,14 +61,13 @@ router.post("/uploadfiles", (req, res) => {
         });
   });
 
-  router.get("/getVideoDetail", (req, res) => {
-
-    Video.findOne({ "_id" : req.body.videoId })
-          .populate('writer')
-          .exec((err, videoDetail) => {
-            if(err) return res.status(400).send(err)
-            return res.status(200).json({ success : true, videoDetail })
-          })
+  router.post("/getVideoDetail", (req, res) => {
+    Video.findOne({ _id: req.body.videoId })
+      .populate("writer")
+      .exec((err, videoDetail) => {
+        if (err) return res.status(400).send(err);
+        return res.status(200).json({ success: true, videoDetail });
+      });
   });
 
 

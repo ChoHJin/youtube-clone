@@ -12,7 +12,7 @@ function VideoDetailPage(props) {
 
     useEffect(() => {
         
-        Axios.post("/api/video/getVideoDetail", variable)
+        Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
                 if(response.data.success) {
                     console.log(response.data.videoDetail)
@@ -29,8 +29,7 @@ function VideoDetailPage(props) {
                 <Col lg = {18} xs = {24}>
     
                 <div style = {{ width : '100%', padding : '3rem 4rem'}}>
-                    <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
-    
+                <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls></video>
                     <List.Item
                         actions
                     >
