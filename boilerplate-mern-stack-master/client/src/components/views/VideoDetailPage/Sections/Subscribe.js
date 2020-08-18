@@ -4,8 +4,8 @@ import Axios from 'axios';
 function Subscribe(props) {
 
 
-    const [SubscribeNumber, setSubscribeNumber] = useState(0);
-    const [Subscribed, setSubscribed] = useState(false);
+    const [SubscribeNumber, setSubscribeNumber] = useState(0)
+    const [Subscribed, setSubscribed] = useState(false)
 
     useEffect(() => {
         
@@ -42,13 +42,13 @@ function Subscribe(props) {
 
         //이미 구독중 이라면
         if(Subscribed) {
-            Axios.post("/api/subscribe/unSubscribe", subscribedVariable )
-            .then(response => {
+            Axios.post("/api/subscribe/unSubscribe", subscribedVariable)
+            .then((response) => {
                 if(response.data.success) {
-                    setSubscribeNumber(SubscribeNumber - 1)
-                    setSubscribed(!Subscribed)
+                    setSubscribeNumber(SubscribeNumber - 1);
+                    setSubscribed(!Subscribed);
                 }else {
-                    alert('구독 취소 하는데 실패했습니다.')
+                    alert('구독 취소를 실패했습니다.')
                 }
             })
 
@@ -57,10 +57,10 @@ function Subscribe(props) {
             Axios.post("/api/subscribe/subscribe", subscribedVariable )
             .then(response => {
                 if(response.data.success) {
-                    setSubscribeNumber(SubscribeNumber + 1)
-                    setSubscribed(!Subscribed)
+                   setSubscribeNumber(SubscribeNumber + 1);
+                    setSubscribed(!Subscribed);
                 }else {
-                    alert('구독 하는데 실패했습니다.')
+                    alert('구독하는데 실패했습니다.')
                 }
             })
         }

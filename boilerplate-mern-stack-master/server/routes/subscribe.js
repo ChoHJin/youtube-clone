@@ -42,7 +42,7 @@ router.post("/unSubscribe", (req, res) => {
 
 
 
-router.post("/Subscribe", (req, res) => {
+router.post("/subscribe", (req, res) => {
   const subscribe = new Subscriber(req.body);
 
   subscribe.save((err, doc) => {
