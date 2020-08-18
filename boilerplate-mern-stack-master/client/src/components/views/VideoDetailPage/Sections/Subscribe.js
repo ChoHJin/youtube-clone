@@ -3,15 +3,16 @@ import Axios from 'axios';
 
 function Subscribe(props) {
 
-    const [SubscribeNumber, setSubscribeNumber] = useState(0)
-    const [Subscribed, setSubscribed] = useState(false)
+
+    const [SubscribeNumber, setSubscribeNumber] = useState(0);
+    const [Subscribed, setSubscribed] = useState(false);
 
     useEffect(() => {
         
         let variable = { userTo : props.userTo }
 
 
-        Axios.post('/api/subscribe/subscribeNumber', variable )
+        Axios.post("/api/subscribe/subscribeNumber", variable )
             .then( response => {
                 if(response.data.success) {
                     setSubscribeNumber(response.data.subscribeNumber)
@@ -20,9 +21,9 @@ function Subscribe(props) {
                 }
             })
 
-            let subscribedvariable= { userTo : props.userTo, userFrom : localStorage.getItem('userId')}
+            let subscribedVariable= { userTo : props.userTo, userFrom : localStorage.getItem('userId')}
            
-            Axios.post('/api/subscribe/subscribed', subscribedvariable)
+            Axios.post("/api/subscribe/subscribed", subscribedVariable)
             .then(response => {
                 if(response.data.success) {
                     setSubscribed(response.data.subscribed)
@@ -34,13 +35,14 @@ function Subscribe(props) {
 
     const onSubscribe = () => {
         
-        let subscribeVariable = {
+        let subscribedVariable = {
             userTo : props.userTo,
             userFrom : props.userFrom 
         }
+
         //이미 구독중 이라면
         if(Subscribed) {
-            Axios.post('/api/subscribe/unSubscribe', subscribeVariable )
+            Axios.post("/api/subscribe/unSubscribe", subscribedVariable )
             .then(response => {
                 if(response.data.success) {
                     setSubscribeNumber(SubscribeNumber - 1)
@@ -52,7 +54,7 @@ function Subscribe(props) {
 
         //아직 구독 중이 아니라면
         } else {
-            Axios.post('/api/subscribe/Subscribe', subscribeVariable )
+            Axios.post("/api/subscribe/subscribe", subscribedVariable )
             .then(response => {
                 if(response.data.success) {
                     setSubscribeNumber(SubscribeNumber + 1)
@@ -68,13 +70,18 @@ function Subscribe(props) {
     return (
         <div>
             <button
-            style = {{ backgroundColor : `${Subscribe ? '#CC0000' : '#AAAAAA' }`, borderRadius : '4px',
-                       color : 'white', padding : '10px 16px',
-                       fontWeight : '500', fontSize : '1rem', textTransform: 'uppercase'}}
-               
-                      onClick={onSubscribe}
+            style = {{ 
+                backgroundColor : `${Subscribed ? '#CC0000' : '#AAAAAA' }`, 
+                borderRadius : '4px',
+                color : 'white', 
+                padding : '10px 16px',
+                fontWeight : '500', 
+                fontSize : '1rem', 
+                textTransform: 'uppercase'
+                }}
+                onClick={onSubscribe}
             >
-                {SubscribeNumber} {Subscribed ? 'Subscribed' : 'Subscribe'}
+                {SubscribeNumber} {Subscribed ? "subscribed" : "subscribe"}
             </button>
         </div>
     )
