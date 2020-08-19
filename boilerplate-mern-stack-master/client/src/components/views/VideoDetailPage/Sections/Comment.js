@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
+import SingleComment from './SingleComment';
+
 
 function Comment(props) {
     const videoId = props.postId;
@@ -40,6 +42,7 @@ function Comment(props) {
             <hr />
 
             {/*Comment List */}
+            <SingleComment />
 
             {/* Root Comment Form */}
 
