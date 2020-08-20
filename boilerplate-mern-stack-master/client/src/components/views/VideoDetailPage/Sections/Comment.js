@@ -29,6 +29,8 @@ function Comment(props) {
             .then(response => {
                 if(response.data.success) {
                     console.log(response.data.result)
+                    setcommentValue("")
+                    props.refreshFunction(response.data.result);
                 }else {
                     alert('커멘트를 저장하지 못했습니다.')
                 }
@@ -41,8 +43,14 @@ function Comment(props) {
             <p> Replies </p>
             <hr />
 
-            {/*Comment List */}
-            <SingleComment />
+            {/* Comment Lists */}
+            {props.commentLists && props.commentLists.map((comment, index) => (
+                (!Comment.responseTo &&
+                    <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId}/>    
+                )
+                
+            ))}
+            
 
             {/* Root Comment Form */}
 
