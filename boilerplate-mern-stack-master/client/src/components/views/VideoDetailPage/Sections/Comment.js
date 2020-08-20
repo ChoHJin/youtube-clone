@@ -28,7 +28,7 @@ function Comment(props) {
         Axios.post('/api/comment/saveComment', variables)
             .then(response => {
                 if(response.data.success) {
-                    console.log(response.data.result)
+                    //console.log(response.data.result)
                     setcommentValue("")
                     props.refreshFunction(response.data.result);
                 }else {
@@ -45,10 +45,10 @@ function Comment(props) {
 
             {/* Comment Lists */}
             {props.commentLists && props.commentLists.map((comment, index) => (
-                (!Comment.responseTo &&
+                (!comment.responseTo &&
                     <React.Fragment>
-                        <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId}/>    
-                        <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={videoId} commentLists={props.commentLists}/>
+                        <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId} />
+                        <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} commentLists={props.commentLists} postId={videoId} />
                     </React.Fragment>
                 )
                 
