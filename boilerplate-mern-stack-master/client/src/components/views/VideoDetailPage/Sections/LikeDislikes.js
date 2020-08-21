@@ -13,9 +13,9 @@ function LikeDislikes(props) {
     let variable = {}
 
     if(props.video) {
-        variable= { videoId : props.videoId , userId : props.userId}
+        variable = { videoId: props.videoId, userId: props.userId }
     }else {
-        variable = { commentId : props.commentId , userId : props.userId }
+        variable = { commentId: props.commentId, userId: props.userId }
     }
     
 
@@ -25,7 +25,6 @@ function LikeDislikes(props) {
                 if(response.data.success) {
 
                     //얼마나 많은 좋아요를 받았는지
-
                     setLikes(response.data.likes.length)
                     
                     //내가 이미 그 좋아요를 눌렀는지
@@ -36,7 +35,7 @@ function LikeDislikes(props) {
                     })
 
                 }else{
-                    alert('Likes에 정보를 가져오지 못했습니다.')
+                    alert('Likes 정보를 가져오지 못했습니다.')
                 }
             })
 
@@ -46,7 +45,6 @@ function LikeDislikes(props) {
                 if(response.data.success) {
 
                     //얼마나 많은 싫어요를 받았는지
-
                     setDislikes(response.data.dislikes.length)
                     
                     //내가 이미 그 싫어요를 눌렀는지
@@ -70,15 +68,15 @@ function LikeDislikes(props) {
 
             Axios.post('/api/like/upLike' , variable)
              .then(response => {
-                 if(response.data.succesee) {
+                if(response.data.success) {
                     setLikes(Likes + 1)
                     setLikeAction('liked')
 
-                    if(DisLikeAction !== null ) {
+                    if(DisLikeAction !== null) {
                         setDisLikeAction(null)
-                        setDislikes(Dislikes - 1)
+                        setDislikes(Dislikes -1)
                     }
-                 }else{
+                 }else {
                      alert('Like를 올리지 못했습니다.')
                  }
              })
@@ -87,7 +85,7 @@ function LikeDislikes(props) {
 
             Axios.post('/api/like/unLike' , variable)
              .then(response => {
-                 if(response.data.succesee) {
+                if(response.data.success) {
                     setLikes(Likes - 1)
                     setLikeAction(null)
 
@@ -104,7 +102,7 @@ function LikeDislikes(props) {
 
             Axios.post('/api/like/unDislike',variable)
                 .then(response => {
-                    if (response.data.success) {
+                    if(response.data.success) {
                         setDislikes(Dislikes - 1)
                         setDisLikeAction(null)
 
@@ -114,12 +112,12 @@ function LikeDislikes(props) {
                 })
 
         } else {
-            Axios.post('/api/like/upDislike',variable)
+            Axios.post('/api/like/upDislike', variable)
                 .then(response => {
-                    if (response.data.success) {
-                        setDislikes(DisLikeAction + 1)
+                    if(response.data.success) {
+                        setDislikes(Dislikes + 1)
                         setDisLikeAction('disliked')
-
+    
                         if(LikeAction !== null) {
                             setLikeAction(null)
                             setLikes(Likes - 1)
@@ -143,7 +141,7 @@ function LikeDislikes(props) {
                     />    
                 </Tooltip>    
                 <span style={{ paddingLeft: '8px', cursor:'auto' }}> {Likes} </span>
-            </span>
+            </span>&nbsp;&nbsp;
 
             <span key ="comment-basic-dislike">
                 <Tooltip title="Dislike">
@@ -154,7 +152,7 @@ function LikeDislikes(props) {
                     />
                 </Tooltip>
                 <span style={{ paddingLeft: '8px', cursor:'auto' }}> {Dislikes} </span>
-            </span>
+            </span>&nbsp;&nbsp;
 
             
         </div>
