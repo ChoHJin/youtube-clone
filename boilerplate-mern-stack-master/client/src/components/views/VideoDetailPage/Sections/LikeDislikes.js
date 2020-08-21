@@ -72,7 +72,7 @@ function LikeDislikes(props) {
                     <Icon 
                         type="like"
                         theme={LikeAction === 'liked' ? 'filled' : 'outlined'}  
-                        onclick 
+                        onClick 
                     />    
                 </Tooltip>    
                 <span style={{ paddingLeft: '8px', cursor:'auto' }}> {Likes} </span>
